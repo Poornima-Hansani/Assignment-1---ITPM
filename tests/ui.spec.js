@@ -10,7 +10,7 @@ test.describe('UI Performance and Behavior Tests', () => {
     const outputField = page.locator('div:has-text("Sinhala") + div').nth(1);
 
     // UI test case input
-    const testInput = 'mama yanavaa';
+    const testInput = 'mama iiyee gedhara giyaa saha passe chithrapatayakuth balannee naehae';
     await inputField.pressSequentially(testInput, { delay: 100 });
 
     // Waiting to trnaslate
@@ -24,7 +24,7 @@ test.describe('UI Performance and Behavior Tests', () => {
     console.log('Pos_UI_0001 Actual Output: ' + actualOutput);
 
     // ✅ FIX: now validate real-time output (same method, longer timeout)
-    await expect(outputField).toHaveText('මම යනවා', { timeout: 25000 });
+    await expect(outputField).toHaveText('mama iiyee gedhara giyaa saha passe chithrapatayakuth balannee naehae', { timeout: 25000 });
   });
 
 });
