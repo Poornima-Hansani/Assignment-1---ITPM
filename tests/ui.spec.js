@@ -9,22 +9,27 @@ test.describe('UI Performance and Behavior Tests', () => {
     const inputField = page.locator('textarea').first();
     const outputField = page.locator('div:has-text("Sinhala") + div').nth(1);
 
-    // UI test case input
-    const testInput = 'mama iiyee gedhara giyaa saha passe chithrapatayakuth balannee naehae';
-    await inputField.pressSequentially(testInput, { delay: 100 });
+    const testInput = 'mama yanavaa';
 
-    // Waiting to trnaslate
-    await page.waitForTimeout(2000);
+    // Type slowly to trigger live translation
+    await inputField.click();
+await inputField.fill('');
 
-    // ✅ FIX: wait until something appears first (same method, longer timeout)
+// ✅ real typing events across all browsers
+await inputField.type(testInput, { delay: 100 });
+
+// ✅ wait for output to change (stronger than fixed timeout)
+await expect
+  .poll(async () => (await outputField.innerText()).trim(), { timeout: 25000 })
+  .not.toBe('');
+
+    // Wait for translation
     await expect(outputField).not.toBeEmpty({ timeout: 25000 });
 
-    // Getting actual output
     const actualOutput = await outputField.innerText();
     console.log('Pos_UI_0001 Actual Output: ' + actualOutput);
 
-    // ✅ FIX: now validate real-time output (same method, longer timeout)
-    await expect(outputField).toHaveText('mama iiyee gedhara giyaa saha passe chithrapatayakuth balannee naehae', { timeout: 25000 });
+    await expect(outputField).toHaveText(/මම\s+යනවා/, { timeout: 25000 });
   });
 
 });

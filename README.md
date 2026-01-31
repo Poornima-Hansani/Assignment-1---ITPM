@@ -1,7 +1,6 @@
 # Assignment-1---ITPM
 
 
-
 # IT23155602-Assg1
 # Singlish to Sinhala Transliteration Testing
 
